@@ -1,0 +1,57 @@
+RewriteEngine On
+
+# Configuração de URL amigável
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Roteamento para a API
+RewriteRule ^api/(.*)$ api/$1 [QSA,L]
+
+# Roteamento para o painel de administração
+RewriteRule ^admin/(.*)$ admin/$1 [QSA,L]
+
+# Roteamento para arquivos públicos
+RewriteRule ^(css|js|images|fonts)/(.*)$ public/$1/$2 [L]
+
+# Roteamento para a home
+RewriteRule ^$ public/index.php [L]
+
+# Roteamento para páginas públicas
+RewriteRule ^([a-zA-Z0-9_-]+)$ public/$1.php [L]
+
+# Desativar listagem de diretórios
+Options -Indexes
+
+# Definir a página de erro 404
+ErrorDocument 404 /public/error/404.php
+
+# Definir a página de erro 500
+ErrorDocument 500 /public/error/500.php
+
+# Proteção contra ataques XSS
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "same-origin"
+    Header always append X-Frame-Options SAMEORIGIN
+</IfModule>
+
+# Definir o charset padrão
+AddDefaultCharset UTF-8
+
+# Permitir acesso aos arquivos necessários
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Bloquear acesso a arquivos sensíveis
+<FilesMatch "^\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+<FilesMatch "^(composer\.json|composer\.lock|package\.json|package-lock\.json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch> 

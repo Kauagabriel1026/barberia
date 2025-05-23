@@ -1,0 +1,29 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^endpoints/([^/]+)/([0-9]+)/([^/]+)$ endpoints/$1.php/$2/$3 [L,QSA]
+RewriteRule ^endpoints/([^/]+)/([0-9]+)$ endpoints/$1.php/$2 [L,QSA]
+RewriteRule ^endpoints/([^/]+)$ endpoints/$1.php [L,QSA]
+
+# Definir cabeçalhos CORS padrão
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    
+    # Permitir requisições pré-voo OPTIONS
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^(.*)$ $1 [R=200,L]
+</IfModule>
+
+# Desativar listagem de diretórios
+Options -Indexes
+
+# Proteger o arquivo .htaccess
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Definir o tipo de conteúdo padrão para resposta
+DefaultType application/json 
