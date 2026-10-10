@@ -23,7 +23,7 @@ Pré-requisito: PHP 7.4 ou superior com a extensão `pdo_sqlite` habilitada.
 
 ```bash
 git clone https://github.com/Kauagabriel1026/barberia.git
-cd barberia/barbearia-main
+cd barberia
 php server.php
 ```
 
@@ -39,7 +39,6 @@ Se a porta 8000 estiver ocupada, altere a variável `$port` em `server.php`.
 ## Estrutura
 
 ```
-barbearia-main/
 ├── admin/            # Login, logout e painel administrativo
 ├── api/endpoints/    # Endpoints REST (agendamento, auth)
 ├── app/
@@ -55,7 +54,7 @@ barbearia-main/
 
 ## API
 
-Endpoints de agendamento (`api/endpoints/agendamento.php`), com respostas em JSON:
+Endpoints de agendamento, com respostas em JSON. As rotas partem de `/api/endpoints/agendamento.php`:
 
 | Método | Rota | O que faz |
 | --- | --- | --- |
@@ -63,8 +62,8 @@ Endpoints de agendamento (`api/endpoints/agendamento.php`), com respostas em JSO
 | GET | `/data?data=AAAA-MM-DD` | Lista os agendamentos de uma data |
 | GET | `/horarios-disponiveis?data=AAAA-MM-DD` | Lista os horários livres de uma data |
 | GET | `/{id}/cliente` | Lista os agendamentos de um cliente |
-
-A API também aceita `POST` e `DELETE` para criar e cancelar agendamentos.
+| POST | `/` | Cria um agendamento |
+| DELETE | `/{id}` | Cancela um agendamento |
 
 ## Licença
 

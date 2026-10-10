@@ -1,3 +1,11 @@
+-- Tabela de clientes
+CREATE TABLE IF NOT EXISTS clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT,
+    telefone TEXT NOT NULL UNIQUE
+);
+
 -- Tabela de agendamentos
 CREATE TABLE IF NOT EXISTS agendamentos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,0 +1,5 @@
+# Banco de dados local (criado automaticamente no primeiro acesso)
+*.db
+
+# Logs de depuração
+*.log
